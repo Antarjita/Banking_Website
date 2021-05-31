@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block stylecontent %}
+    <style>
+        body {
+            background-color: aliceblue
+        }
+      
+    </style>
+{% endblock %}
+
+
+{% block bodycontent%}
+        
+    <div class="container"> 
+        <form class="form-control" action="/accounts/login/" method="post">
+            {% csrf_token %}
+            <h2>Enter login details</h2>
+
+            {{ form }}
+
+            <br>
+
+            <button type="submit" class="btn btn-danger">
+                Login
+            </button>
+
+            <br> <br>
+
+            <small class="row">
+                <a href="{% url 'accounts:signup' %}" class="col text-right">Create New Account</a>
+            </small>
+        </form>
+    </div>
+        
+{% endblock %}
+
+{% block scriptcontent %}
+    <script>
+        $(".active").removeClass("active");
+        $("#nav-login").addClass("active");
+        $("input").addClass("form-control");
+    </script>
+{% endblock %}
