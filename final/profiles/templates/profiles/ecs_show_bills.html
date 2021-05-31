@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+    
+    {% block stylecontent %}
+    <style>
+        body {
+            background-color: aliceblue;
+        }
+        h2 {
+            font-family: 'Slabo 27px';
+            border-bottom: 1px solid black;
+            font-weight: 900;
+        }
+        #page_name {
+            font-size: 25;
+        }
+        
+        #details_box {
+            font-size: 23;
+            top: 50px;
+            left: 30px;
+        }
+        
+        #details_table {
+            font-size: 20;
+            position: relative;
+            /*align-items: center;*/
+            align-items: left;
+        }
+        
+        #edit_details {
+            top: 10px;
+            left: 20px;
+        }
+        
+        #edit_button {
+            border: none;
+            color: black;
+            padding: 5px 7px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 2px 1px;
+            cursor: pointer;
+        }
+    </style>
+    {%endblock%}
+    <body>
+    {% block bodycontent %}
+
+    <form name="pay_bills" action="pay_bill">
+    <table width=70% height=60%>
+    <!-- table width=100% height=60% -->
+        <tr>
+            <td>
+
+                <div id="page_name" style="float:left;">
+                    <font color="#3399ff">User account</font>
+                </div>
+            </td>
+            <td>
+                <div id="edit_details" style="float:right;">
+                    <button type="button" id="edit_button"><a href="{% url 'profiles:dashboard' %}">Home</a></button>
+                </div>
+            </td>
+        </tr>
+
+
+
+        <tr>
+            <td>
+                <div id="details_box" align="center">
+                    <h4>Bills to be paid :</h4>
+                    <input type="hidden" name="bill_id" id="bill_id">
+                    <table id="details_table" cellpadding=5px; width="100%">
+
+                        <tr>
+
+
+
+                        </tr>
+                        <tr>
+                            <!-- td> </td -->
+
+                        </tr>
+                        <tr>
+                            <th colspan=""> Bill ID </th>
+                            <th colspan=""> Biller Name </th>
+                            <th colspan=""> Account <br> number </th>
+                            <!-- th colspan=""> Bills </th -->
+
+                            <th colspan=""> Amount </th>
+                            <th colspan=""> Upper Limit </th>
+                            <th colspan=""> Within Limit? </th>
+                            <th colspan=""> Pay </th>
+
+                        </tr>
+                        {% for bill in bills_list %}
+                        <tr>
+                            <!--td> </td -->
+                            {% for detail in bill %}
+                            <td> {{detail}} </td>
+                            {% endfor %}
+                            
+                            <!-- td> {{ bill.Amount }} </td>
+                            <!-- td> </td -->
+                            <td>
+                                <div id="pay_bill" style="float:right;">
+                                    <button type="submit" id="edit_button" onclick="set_bill_id({{ bill|first }})">Pay Bill</button>
+                                </div>
+                            </td>
+                            
+                            
+
+                        </tr>
+                        {% endfor %}
+                        <!--
+                        <tr>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td>
+                                <div id="pay_bill" style="float:right;">
+                                    <button type="button" id="edit_button">Pay Bill</button>
+                                </div>
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td>
+                                <div id="pay_bill" style="float:right;">
+                                    <button type="button" id="edit_button">Pay Bill</button>
+                                </div>
+                            </td>
+
+                        </tr>
+                        -->
+
+
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+     </form>
+    <script>
+        function set_bill_id(bill_id){
+            hidden_field = document.getElementById("bill_id");
+            hidden_field.setAttribute("value", bill_id);
+            console.log(hidden_field);
+         }
+    </script>
+    {% endblock%}
+</body>

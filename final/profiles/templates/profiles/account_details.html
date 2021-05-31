@@ -1,0 +1,157 @@
+
+<body>
+
+    {% extends 'base.html' %}
+    
+    {% block stylecontent %}
+    <style>
+        body {
+            background-color: aliceblue;
+        }
+        h2 {
+            font-family: 'Slabo 27px';
+            border-bottom: 1px solid black;
+            font-weight: 900;
+        }
+        #page_name {
+            font-size: 25;
+        }
+        
+        #details_box {
+            font-size: 23;
+            top: 50px;
+            left: 30px;
+        }
+        
+        #details_table {
+            font-size: 20;
+            position: relative;
+            align-items: center;
+        }
+        
+        #edit_details {
+            top: 10px;
+            left: 20px;
+        }
+        
+        #edit_button {
+            border: none;
+            color: black;
+            padding: 5px 7px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 2px 1px;
+            cursor: pointer;
+        }
+    </style>
+    {%endblock%}
+    
+    {% block bodycontent %}
+        {% csrf_token %}
+        {% if user.is_authenticated %}
+         <form name="acc_management" id="acc_management" action="process_account_action"> 
+            <input type="hidden" name="account_action" id="account_action">  
+            <table width=70% height=60%>
+                <tr>
+                    <td>
+        
+                        <div id="page_name" style="float:left;">
+                            <font color="#3399ff">Welcome {{ customer.customer_data.Name }}!</font>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="edit_details" style="float:right;">
+                            <button type="button" id="edit_button"><a href="{% url 'profiles:dashboard' %}">Home</a></button>
+                        </div>
+                    </td>
+                </tr>
+        
+        
+        
+                <tr>
+                    <td>
+                        <div id="details_box" align="center">
+                            <h4>Account Details :</h4>
+                            <table id="details_table" cellpadding=5px;>
+                                <tr>
+                                    <td>Customer Name: {{ customer.customer_data.Name }}</td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>Branch-ID: <span id="branch-id">AF600_ElectronicCity</span> </td>
+                                </tr>
+                                {% if accounts %}
+                                {% for accno, acc_obj in accounts.items %}
+                                <tr>
+                                    <td>Account number : {{ accno }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Balance: {{ acc_obj.account_details.Balance }}</td>
+                                    
+                                </tr>
+                                {% endfor %}
+                                {% else %}
+                                <tr> <td> New Customer. No accounts yet. </td></tr>
+                                {% endif %}
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        
+        {% else %}
+            <p>Welcome, new user. Please log in.</p>
+        {% endif %}
+        
+        <button onclick="set_account_action('create')"> Create New Account </button> <br>
+        Close Account?
+        <input name="close_accno" id="close_accno">
+        <button onclick="set_account_action('close');check_valid_accno()" type="button"> Close Account </button>
+        <!-- Setting button type = "button" so that form does not submit on button click -->
+        <span id="err_msg"> <b> </b> </span>
+        </form>
+        <script>
+        function set_account_action(account_action_val){
+            hidden_field = document.getElementById("account_action");
+            hidden_field.setAttribute("value", account_action_val);
+         }
+         
+         function check_valid_accno(){
+            accno = document.getElementById("close_accno").value;
+            accno_int = parseInt(accno)
+            valid_accounts = {{can_close_accnos}};
+            invalid_accno = true;
+            
+            for(accno of valid_accounts){
+                if(accno_int == accno){
+                    form_elem = document.getElementById("acc_management");
+                    form_elem.submit();
+                    invalid_accno = false;
+                }
+            }
+            
+            if(invalid_accno){
+                err_msg_tag = document.getElementById("err_msg");
+                err_msg_tag.textContent = "Invalid Account Number! User does not own this account";
+            }
+            /*
+            if(accno_int in valid_accounts){
+            //Checking if accno exists in valid_accounts Javascript obj
+                form_elem = document.getElementById("acc_management");
+                form_elem.submit();
+            }
+            else{
+                err_msg_tag = document.getElementById("err_msg");
+                err_msg_tag.textContent = "Invalid Account Number! User does not own this account";
+            }
+            */
+         }
+         
+         
+         </script>
+        
+    {% endblock%}
+    
+    </body>

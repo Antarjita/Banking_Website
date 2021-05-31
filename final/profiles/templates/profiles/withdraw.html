@@ -1,0 +1,111 @@
+<body>
+    {% extends 'base.html' %}
+    {% load static %}
+    
+    {% block stylecontent %}
+    <style>
+        body {
+            background-color: aliceblue;
+        }
+        h2 {
+            font-family: 'Slabo 27px';
+            border-bottom: 1px solid black;
+            font-weight: 900;
+        }
+        #page_name {
+            font-size: 25;
+        }
+        
+        #details_box {
+            font-size: 23;
+            top: 50px;
+            left: 30px;
+        }
+        
+        #details_table {
+            font-size: 20;
+            position: relative;
+            align-items: center;
+        }
+        
+        #edit_details {
+            top: 10px;
+            left: 20px;
+        }
+        
+        #edit_button {
+            border: none;
+            color: black;
+            padding: 5px 7px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 2px 1px;
+            cursor: pointer;
+        }
+    </style>
+
+    {%endblock%}
+    
+    {% block bodycontent %}
+    <table width=70% height=60%>
+        <tr>
+            <td>
+                <div id="page_name" style="float:left;">
+                    <font color="#3399ff">Withdraw</font>
+                </div>
+            </td>
+            <td>
+                <div id="edit_details" style="float:right;">
+                    <button type="button" id="edit_button"><a href="{% url 'profiles:dashboard' %}">Home</a></button>
+                </div>
+                
+            </td>
+            
+        </tr>
+        <tr>
+            <td></td>
+
+            <td>
+
+                <div id="details_box">
+                    <form name="withdraw_details" action="withdraw" method="POST">
+                        <table id="details_table" cellpadding=5px;>
+                            {% if accounts %}
+                            {% csrf_token %}
+                            <tr>
+                                <td>Amount to be withdrawn :</td>
+                                <td><input type="text" name="amount" placeholder="Amount"></td>
+                            </tr>
+                            <tr>
+                                <td> Withdraw from account :</td>
+                                <td><input type="text" name="acc_no" placeholder="Account number"></td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <!--<td><input type="button" value="Withdraw"></td>-->
+                                <td><button>Withdraw</button></td>
+                            </tr>
+                            {% else %}
+                                <tr> <td> New Customer. No accounts yet. </td></tr>
+                            {% endif %}
+                            <tr>
+                                <td><span>{{msg|safe}}</span></td>
+                            </tr>
+                            <tr>
+                                <td> <small>By transferring money from your account, you agree to the <a href="#">Terms and Conditions</a> of amount transfer</small>. <br></td>
+                            </tr>
+                        </table>
+                    </form>
+                    
+                   
+                    
+                </div>
+            </td>
+        </tr>
+    </table>
+    {% endblock%}
+</body>
+

@@ -1,0 +1,162 @@
+<body>
+    {% extends 'base.html' %}
+    {% load static %}
+    
+    {% block stylecontent %}
+    <style>
+        body {
+            background-color: aliceblue;
+        }
+        h2 {
+            font-family: 'Slabo 27px';
+            border-bottom: 1px solid black;
+            font-weight: 900;
+        }
+        #page_name {
+            font-size: 25;
+        }
+        
+        #details_box {
+            font-size: 23;
+            top: 50px;
+            left: 30px;
+        }
+        
+        #details_table {
+            font-size: 20;
+            position: relative;
+            align-items: center;
+        }
+        
+    #buttons_table {
+        font-size: 25;
+        border: 1px solid black;
+        border-radius: 10px;
+        align-items: center;
+    }
+
+    #buttons_box {
+        margin-left: 40;
+        padding-left: 20%;
+        padding-top: 10%;
+        padding-bottom: 10%;
+        position: relative;
+    }
+
+    #buttons {
+        border: none;
+        color: black;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        background-color: #33adff;
+        height: 40px;
+        width: 250px;
+    }
+
+    #buttons:hover {
+        background-color: #D0D0D0;
+    }
+
+        
+    #edit_details {
+        top: 10px;
+        left: 20px;
+    }
+       
+    #edit_button {
+        border: none;
+        color: black;
+        padding: 5px 7px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        margin: 2px 1px;
+        cursor: pointer;
+    }
+    </style>
+
+    {%endblock%}
+    
+    {% block bodycontent %}
+        <table width=70% height=60%>
+            <tr>
+                <td>
+
+                    <div id="page_name" style="float:left;">
+                        <font color="#3399ff">User Account</font>
+                    </div>
+                </td>
+                <td>
+                    <div id="edit_details" style="float:right;">
+                        <button type="button" id="edit_button"><a href="{% url 'profiles:dashboard' %}">Home</a></button>
+                    </div>
+                </td>
+            </tr>
+
+
+
+            <tr>
+                <td>
+                    <div id="details_box" align="center">
+                        <h4>User Details: </h4>
+                        <table id="details_table" cellpadding=5px;>
+                            <tr>
+                                <td>User Name : {{ customer.customer_data.Name }} </td>
+                                <td id="name"></td>
+                            </tr>
+                            <!--
+                            <tr id="accname">
+                                <td>Phone no.: {{customer.Name}}</td>
+                                <td id="acc_name"></td>
+                            </tr>
+                            -->
+
+
+                        </table>
+                    </div>
+                </td>
+                <td>
+                <form name="dashboard" action="redirect_from_dashboard">
+                    <input type="hidden" name="function_chosen" id="function_chosen">
+                    <div id="buttons_box">
+                        <table id="buttons_table" cellpadding=5px;>
+
+                            <tr>
+                                <td><button id="buttons" class="button" onclick="set_function_chosen('view_accounts')">View Accounts</button></td>
+                            </tr>
+                            <!-- tr>
+                                <td><button id="buttons" onclick="set_function_chosen('money_transfer')"> Money Transfer</button></td>
+                            </tr -->
+                            <tr>
+                                <td><button  id="buttons" onclick="set_function_chosen('start_ecs')">  Start ECS   </button></td>
+                            </tr>
+                            <tr>
+                                <td><button  id="buttons" onclick="set_function_chosen('withdraw')">   Withdraw   </button></td>
+                            </tr>
+                            <tr>
+                                <td><button  id="buttons" onclick="set_function_chosen('deposit')">   Deposit    </button></td>
+                            </tr>
+                            <tr>
+                                <td><button  id="buttons" onclick="set_function_chosen('stat_gen')">  Statement Generation   </button></td>
+                            </tr>
+                        </table>
+                    </div>
+                </form>
+                </td>
+            </tr>
+        </table>
+        
+        <script>
+        function set_function_chosen(menu_name){
+            hidden_field = document.getElementById("function_chosen");
+            hidden_field.setAttribute("value", menu_name);
+        }
+        </script>
+    {% endblock%}
+</body>

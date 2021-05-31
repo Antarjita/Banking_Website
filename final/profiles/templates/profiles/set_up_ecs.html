@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+    
+    {% block stylecontent %}
+    <style>
+        body {
+            background-color: aliceblue;
+        }
+        h2 {
+            font-family: 'Slabo 27px';
+            border-bottom: 1px solid black;
+            font-weight: 900;
+        }
+        #page_name {
+            font-size: 25;
+        }
+        
+        #details_box {
+            font-size: 23;
+            top: 50px;
+            left: 30px;
+        }
+        
+        #details_table {
+            font-size: 20;
+            position: relative;
+            align-items: center;
+        }
+        
+        #edit_details {
+            top: 10px;
+            left: 20px;
+        }
+        
+        #edit_button {
+            border: none;
+            color: black;
+            padding: 5px 7px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 2px 1px;
+            cursor: pointer;
+        }
+    </style>
+    {%endblock%}
+<body>
+    {% block bodycontent %}
+        <table width=70% height=60%>
+            <tr>
+                <td>
+
+                    <div id="page_name" style="float:left;">
+                        <font color="#3399ff">User account</font>
+                    </div>
+                </td>
+                <td>
+                    <div id="edit_details" style="float:right;">
+                        <button type="button" id="edit_button"><a href="{% url 'profiles:dashboard' %}">Home</a></button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <form name="set_up_ecs" action="store_new_ecs_data" >
+            Payee Name: <input name="payer_name"> <br>
+            Account No. : <input name="accno"> <br>
+            Upper Limit: <input name="upper_limit"> <br>
+            <button> Start ECS </button>
+        </form>
+        {{ msg }}
+    {%endblock%}
+</body>
+
+
