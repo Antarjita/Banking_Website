@@ -26,9 +26,11 @@ Create a DB in MYSQL with name:- Bank_DB
 
 Steps to run the code :
        
-  ```python manage.py makemigrations
+  ```
+  python manage.py makemigrations
   python manage.py migrate
-  python manage.py runserver```
+  python manage.py runserver
+  ```
 
 Go to browser and run url - 
 Online Bank -  http://127.0.0.1:8000/accounts/login/
